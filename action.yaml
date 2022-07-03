@@ -1,5 +1,5 @@
 name: "WaybackURLs Action"
-description: "WaybackURLs Action is based on Tomnomnom https://github.com/tomnomnom/waybackurls waybackurls script to fetch URLs of a list of (sub)domains from Wayback Machine"
+description: "WaybackURLs Action is based on Tomnomnom https://github.com/tomnomnom/waybackurls to fetch URLs from Wayback Machine"
 branding:
   icon: "activity"
   color: "blue"
