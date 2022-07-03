@@ -1,0 +1,28 @@
+name: "WaybackURLs Action"
+description: "WaybackURLs Action is based on Tomnomnom https://github.com/tomnomnom/waybackurls waybackurls script to fetch URLs of a list of (sub)domains from Wayback Machine"
+branding:
+  icon: "activity"
+  color: "blue"
+
+inputs:
+  list:
+    description: "List of hosts to run WaybackURLs against"
+    required: true
+    default: ""
+  output:
+    description: "File to save output result"
+    required: false
+    default: "waybackurls.txt"
+
+runs:
+  using: "composite"
+  steps:
+    - run: |
+        [ ! -x /home/runner/go/bin/waybackurls ] && go install -v github.com/tomnomnom/waybackurls@latest
+        [ ! -z "${{ inputs.list }}" ] && echo "list=${{ inputs.list}}" >> $GITHUB_ENV
+        [ ! -z "${{ inputs.output }}" ] && echo "output= > ${{ inputs.output}}" >> $GITHUB_ENV || echo "output= > waybackurls.txt" >> $GITHUB_ENV
+        echo "/home/runner/go/bin/" >> $GITHUB_PATH
+      shell: bash
+    - run: |
+        cat ${{ env.list }} | waybackurls ${{ env.output }}
+      shell: bash
